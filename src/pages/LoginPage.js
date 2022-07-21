@@ -1,23 +1,24 @@
 import { useEffect } from "react";
 import axios from "axios";
-
+import qs from "qs";
 function LoginPage(props){
 
     function joinHandler(){
         try{
             let data = {
-                username: "admin@admin.com",
+                username: "admin@email.com",
                 password: "admin",
-                grant_type: "password"
+                grant_type: "password",
             };
-            axios.post("/api/oauth/token" ,JSON.stringify(data), {
+            console.log(data)
+            axios.post("/api/oauth/token" ,qs.stringify(data), {
 
                 headers: {
-                    "Content-Type": `application/x-www-form-urlencoded`,
-                    "Authorization": 'Basic bXlBcHA6cGFzcw=='
+                    'Content-Type' : 'application/x-www-form-urlencoded',
+                    'Authorization' : 'Basic bXlBcHA6cGFzcw=='
                 }})
                 .then(res =>{
-                    console.log("res.data.accessToken : " + res.data);
+                    console.log("res.data.accessToken : " + res.data['access_token']);
                     axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data;
                     props.loginCallBack(true);
                     props.history.push("/");
