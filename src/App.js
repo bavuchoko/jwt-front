@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+
+import { BrowserRouter, Route } from 'react-router-dom';
+import LoginPage from './pages/LoginPage';
+import HomePage from './pages/HomePage';
+import AuthRoute from './component/AuthRoute';
+import { useEffect, useState } from 'react';
+import axios from "axios";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [isLogin , setIsLogin] = useState(false);
+
+    useEffect(()=>{
+
+    },[]);
+
+    function loginCallBack(login){
+        setIsLogin(login);
+    }
+
+    return (
+        <div className="App">
+            <BrowserRouter>
+                <AuthRoute exact isLogin={isLogin} path="/" component={HomePage} />
+                <Route path="/login"  render={(props)=> <LoginPage {...props} loginCallBack={loginCallBack}/>} />
+            </BrowserRouter>
+        </div>
+    );
 }
 
 export default App;
